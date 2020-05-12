@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
-<title>06-03 slides</title>
+<title>07-01 slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13202,7 +13202,7 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lecture-14---Classes-and-Methods">Lecture 14 - Classes and Methods<a class="anchor-link" href="#Lecture-14---Classes-and-Methods">&#182;</a></h1><h2 id="Week-6-Friday">Week 6 Friday<a class="anchor-link" href="#Week-6-Friday">&#182;</a></h2><h2 id="Miles-Chen,-PhD">Miles Chen, PhD<a class="anchor-link" href="#Miles-Chen,-PhD">&#182;</a></h2><p>Taken directly from Chapters 17 of Think Python by Allen B Downey</p>
+<h1 id="Lecture-15---Classes-and-Inheritance">Lecture 15 - Classes and Inheritance<a class="anchor-link" href="#Lecture-15---Classes-and-Inheritance">&#182;</a></h1><h2 id="Week-7-Monday">Week 7 Monday<a class="anchor-link" href="#Week-7-Monday">&#182;</a></h2><h2 id="Miles-Chen,-PhD">Miles Chen, PhD<a class="anchor-link" href="#Miles-Chen,-PhD">&#182;</a></h2><p>Taken directly from Chapter 18 of Think Python by Allen B Downey</p>
 
 </div>
 </div>
@@ -13210,160 +13210,196 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Methods">Methods<a class="anchor-link" href="#Methods">&#182;</a></h2><p>Methods are functions that are associated with a particular class.</p>
-<p>Methods are the same as functions, but there are two key differences:</p>
+<h2 id="Inheritance">Inheritance<a class="anchor-link" href="#Inheritance">&#182;</a></h2><p><strong>Inheritance</strong> is the ability to define a new class that is a modified version of an existing class.</p>
+<p>In this chapter, we will demonstrate inheritance using classes to represent playing cards, decks of cards, and poker hands.</p>
+<p><a href="https://en.wikipedia.org/wiki/List_of_poker_hands">https://en.wikipedia.org/wiki/List_of_poker_hands</a></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Card-objects">Card objects<a class="anchor-link" href="#Card-objects">&#182;</a></h2><p>There are 52 cards in a deck.</p>
+<p>There are 4 suits: Spades, Hearts, Diamonds, and Clubs (descending order in bridge).</p>
+<p>Each suit has 13 ranks: Ace, 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack, Queen, King.</p>
+<p>If we define a new object to represent a playing card, the attributes will be <code>rank</code> and <code>suit</code>.</p>
+<p>How we should store the attributes is not obvious. If we use strings, it will not be easy to compare cards to see which has a higher rank or suit.</p>
+<p>Another option is to use integers to <em>encode</em> the ranks and suits. For example, we use the following for the suits:</p>
 <ul>
-<li>Methods are defined inside a class definition.</li>
-<li>The syntax for invoking a method is different from the syntax for calling a function.</li>
+<li>spades: 3</li>
+<li>hearts: 2</li>
+<li>diamonds: 1</li>
+<li>clubs: 0</li>
 </ul>
+<p>For the ranks, we'll use the numeric value, with Jacks: 11, Queens: 12, Kings: 13</p>
 
 </div>
 </div>
 </div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Revisiting-The-Time-Class">Revisiting The Time Class<a class="anchor-link" href="#Revisiting-The-Time-Class">&#182;</a></h2><p>In the previous chapter/lecture we created a class <code>Time</code>.</p>
-<p>We also wrote a function called <code>print_time()</code></p>
-
-</div>
-</div>
-</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Represents the time of day.&quot;&quot;&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Represents a standard playing card.&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suit</span> <span class="o">=</span> <span class="n">suit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The default card would be a two of Clubs.</p>
+
+</div>
+</div>
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">queen_of_diamonds</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div></div><div class="fragment">
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To call the function, we had to create a <code>Time</code> object and pass it as an argument.</p>
+<p>We also want the card objects to be read easily by humans.</p>
+<p>So we need a way to go from the integer codes back to suits and ranks.</p>
+<p>We'll do this by creating a list of names and then defining the <code>__str__</code> method to represent the card.</p>
 
 </div>
 </div>
-</div></div><div class="fragment">
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">print_time</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suit</span> <span class="o">=</span> <span class="n">suit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span>
+    
+    <span class="n">suit_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Clubs&#39;</span><span class="p">,</span> <span class="s1">&#39;Diamonds&#39;</span><span class="p">,</span> <span class="s1">&#39;Hearts&#39;</span><span class="p">,</span> <span class="s1">&#39;Spades&#39;</span><span class="p">]</span>
+    <span class="n">rank_names</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Ace&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Queen&#39;</span><span class="p">,</span> <span class="s1">&#39;King&#39;</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Card</span><span class="o">.</span><span class="n">rank_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">],</span>
+                             <span class="n">Card</span><span class="o">.</span><span class="n">suit_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">suit</span><span class="p">])</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
+</div><div class="fragment">
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Making-a-method">Making a method<a class="anchor-link" href="#Making-a-method">&#182;</a></h2><p>To make print_time a method, all we have to do is move the function definition inside the class definition.</p>
-<p>Note the indentation.</p>
+<p>Variables like <code>suit_names</code> and <code>rank_names</code>, which are defined inside a class but outside of any method, are called <strong>class attributes</strong> because they are associated with the class object <code>Card</code>. Note that in their definition, <code>suit_names</code> and <code>rank_names</code> are not preceeded by <code>self</code>.</p>
+<p>This term distinguishes them from variables like <code>suit</code> and <code>rank</code>, which are called <strong>instance attributes</strong> because they are associated with a particular instance. These attributes are preceeded by <code>self</code></p>
+<p>If we create multiple cards, every card has its own <code>suit</code> and <code>rank</code> but there is only copy of <code>suit_names</code> and <code>rank_names</code>.</p>
+<p>The first value (index zero) in <code>rank_names</code> is <code>None</code> because there is no card with a rank zero.</p>
 
 </div>
 </div>
-</div><div class="fragment">
+</div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">card1</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">card1</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have redefined the class with a method defined inside, we can call the method.</p>
-<p>Note, I have to re-create start as a <code>Time</code> class object because the old start object was created under the old definition of class <code>Time</code>. The changes don't apply retroactively.</p>
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Jack of Hearts
+</pre>
+</div>
+</div>
 
 </div>
 </div>
-</div></div><div class="fragment">
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Comparing-Cards">Comparing Cards<a class="anchor-link" href="#Comparing-Cards">&#182;</a></h2><p>For built-in types, we can use relational operators like &gt;, &lt;, == that compare values and determine when one is greater than, less than, or equal to another.</p>
+<p>For our own defined classes, we can use a special method <code>__lt__</code> which stands for 'less than'</p>
+<p>We'll arbitrarily choose to rank suits as more important, so all of the Spades will outrank all of the Diamonds.</p>
+<p>To perform the comparison, we'll use tuple comparison</p>
+
+</div>
+</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suit</span> <span class="o">=</span> <span class="n">suit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="n">rank</span>
+    
+    <span class="n">suit_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Clubs&#39;</span><span class="p">,</span> <span class="s1">&#39;Diamonds&#39;</span><span class="p">,</span> <span class="s1">&#39;Hearts&#39;</span><span class="p">,</span> <span class="s1">&#39;Spades&#39;</span><span class="p">]</span>
+    <span class="n">rank_names</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;Ace&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Queen&#39;</span><span class="p">,</span> <span class="s1">&#39;King&#39;</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">Card</span><span class="o">.</span><span class="n">rank_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">],</span>
+                             <span class="n">Card</span><span class="o">.</span><span class="n">suit_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">suit</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">suit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">suit</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">rank</span>
+        <span class="k">return</span> <span class="n">t1</span> <span class="o">&lt;</span> <span class="n">t2</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Calling-the-Method">Calling the Method<a class="anchor-link" href="#Calling-the-Method">&#182;</a></h2><p>There are two ways to call a method, but in practice, most people use one.</p>
-<p>The less common way is to use the Class name and pass an object of that class to the method.</p>
-
-</div>
-</div>
-</div><div class="fragment">
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Time</span><span class="o">.</span><span class="n">print_time</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">card1</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">card1</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13380,7 +13416,7 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
+<pre>Queen of Diamonds
 </pre>
 </div>
 </div>
@@ -13388,21 +13424,14 @@ a.anchor-link {
 </div>
 </div>
 
-</div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The more common way is to call the method directly from the object itself using dot notation.</p>
-
-</div>
-</div>
-</div></div><div class="fragment">
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">card2</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">card2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13419,7 +13448,7 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
+<pre>Jack of Hearts
 </pre>
 </div>
 </div>
@@ -13428,70 +13457,13 @@ a.anchor-link {
 </div>
 
 </div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>When you call a method from the object itself, the object is known as the <strong>subject</strong> of the method.</p>
-<p>The subject gets passed to the method as the first argument.</p>
-<p>So in our example above, the object <code>start</code> gets passed as the first argument in thge method <code>print_time()</code>.</p>
-
-</div>
-</div>
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="self"><code>self</code><a class="anchor-link" href="#self">&#182;</a></h2><p>By convention, the first argument of a method is called <code>self</code>.</p>
-<p>The idea is that when you call a method from an object with dot notation, you are applying to function to itself.</p>
-<p>With this in mind, we'ld write our <code>Time</code> class as follows.</p>
-<p>I've also included another method that converts the time to number of seconds after midnight (time_to_int) which will be useful for adding times.</p>
-
-</div>
-</div>
-</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># again, we redefine the object of class Time()</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># diamonds are ranked lower than Hearts</span>
+<span class="n">card1</span> <span class="o">&lt;</span> <span class="n">card2</span>
 </pre></div>
 
     </div>
@@ -13504,375 +13476,7 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[11]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>35100</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We'll use the following function in the next class definition.</p>
-<p>It converts the number of seconds into a time.</p>
-<p>It can't be made as a method of a time object because the argument of this function is an integer value of seconds, and there is no object to invoke the method on.</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
-    <span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-    <span class="n">minutes</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">minutes</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">time</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Adding-more-methods">Adding more methods<a class="anchor-link" href="#Adding-more-methods">&#182;</a></h2>
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-    
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># again, we redefine the object of class Time()</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">end</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
-<span class="n">end</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10:07:17
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Errors-with-method-calls">Errors with method calls<a class="anchor-link" href="#Errors-with-method-calls">&#182;</a></h2><p>Keep in mind that when you call a method from an object, the object itself is always passed as the first argument of the method.</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">end</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">1337</span><span class="p">,</span> <span class="mi">460</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-17-a8fd8b8bdfbc&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>end <span class="ansi-yellow-intense-fg ansi-bold">=</span> start<span class="ansi-yellow-intense-fg ansi-bold">.</span>increment<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-cyan-intense-fg ansi-bold">1337</span><span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-cyan-intense-fg ansi-bold">460</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: increment() takes 2 positional arguments but 3 were given</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The above call returns an error. "increment() takes 2 positional arguments but 3 were given"</p>
-<p>It can be confusing because we see only two arguments (1337 and 460) in parentheses. We must remember that we have also passed <code>self</code> (the subject) as the first argument, so there really are three arguments.</p>
-
-</div>
-</div>
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Methods-with-other-class-objects">Methods with other class objects<a class="anchor-link" href="#Methods-with-other-class-objects">&#182;</a></h2><p>We can create a method inside <code>Time</code> called <code>is_after()</code> which will check to see if one time takes place after another time.</p>
-<p>This function takes in two <code>Time</code> class objects and compares them. I add this method to the end of our class definition.</p>
-<p>Because we expect the argument passed to <code>is_after()</code> is another <code>Time</code> class object, we can invoke the methods of the object. By convention, the first parameter of the method is <code>self</code>, and the parameter for the other class object being passed is named <code>other</code></p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-    
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Calling the new method</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># redefine the objects</span>
-<span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">start</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="mi">9</span>
-<span class="n">start</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">start</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">start</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">end</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="mi">1337</span><span class="p">)</span>
-<span class="n">end</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10:07:17
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">end</span><span class="o">.</span><span class="n">is_after</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -13889,10 +13493,517 @@ a.anchor-link {
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">card3</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">card3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Queen of Hearts
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">card3</span> <span class="o">&lt;</span> <span class="n">card2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Building-a-Deck">Building a Deck<a class="anchor-link" href="#Building-a-Deck">&#182;</a></h2><p>Now that we have Cards, the next step is to define Decks. Since a deck is made up of cards, it is natural for each Deck to contain a list of cards as an attribute.</p>
+<p>The following is a class definition for Deck. The <code>__init__</code> method creates the attribute cards and generates the standard set of fifty-two cards.</p>
+<p>The <code>__str__</code> method builds a list of the string representation of cards and uses the string method <code>join</code></p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Deck</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">suit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">):</span>
+                <span class="n">card</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="n">suit</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">card</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Ace of Clubs
+2 of Clubs
+3 of Clubs
+4 of Clubs
+5 of Clubs
+6 of Clubs
+7 of Clubs
+8 of Clubs
+9 of Clubs
+10 of Clubs
+Jack of Clubs
+Queen of Clubs
+King of Clubs
+Ace of Diamonds
+2 of Diamonds
+3 of Diamonds
+4 of Diamonds
+5 of Diamonds
+6 of Diamonds
+7 of Diamonds
+8 of Diamonds
+9 of Diamonds
+10 of Diamonds
+Jack of Diamonds
+Queen of Diamonds
+King of Diamonds
+Ace of Hearts
+2 of Hearts
+3 of Hearts
+4 of Hearts
+5 of Hearts
+6 of Hearts
+7 of Hearts
+8 of Hearts
+9 of Hearts
+10 of Hearts
+Jack of Hearts
+Queen of Hearts
+King of Hearts
+Ace of Spades
+2 of Spades
+3 of Spades
+4 of Spades
+5 of Spades
+6 of Spades
+7 of Spades
+8 of Spades
+9 of Spades
+10 of Spades
+Jack of Spades
+Queen of Spades
+King of Spades
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Add,-remove,-shuffle,-and-sort">Add, remove, shuffle, and sort<a class="anchor-link" href="#Add,-remove,-shuffle,-and-sort">&#182;</a></h2><p>To deal cards, we can create a method that removes a card from the deck and returns it. We can use define the following method inside the class:</p>
+
+<pre><code>    def pop_card(self):
+        return self.cards.pop()</code></pre>
+<p>To add a card, we can use the list method <code>append</code></p>
+
+<pre><code>    def add_card(self, card):
+        self.cards.append(card)</code></pre>
+<p>We can also add a <code>shuffle</code> method to mix the cards</p>
+
+<pre><code>    def shuffle(self):
+        random.shuffle(self.cards)</code></pre>
+<p>Because we have defined the method <code>__lt__</code> for the cards, we can perform <code>sort</code> operations to sort the cards</p>
+
+<pre><code>    def sort(self):
+        self.cards.sort()</code></pre>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="k">class</span> <span class="nc">Deck</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">suit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">):</span>
+                <span class="n">card</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="n">suit</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">card</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">pop_card</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>52</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">deck</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Ace of Clubs
+2 of Clubs
+3 of Clubs
+4 of Clubs
+5 of Clubs
+6 of Clubs
+7 of Clubs
+8 of Clubs
+9 of Clubs
+10 of Clubs
+Jack of Clubs
+Queen of Clubs
+King of Clubs
+Ace of Diamonds
+2 of Diamonds
+3 of Diamonds
+4 of Diamonds
+5 of Diamonds
+6 of Diamonds
+7 of Diamonds
+8 of Diamonds
+9 of Diamonds
+10 of Diamonds
+Jack of Diamonds
+Queen of Diamonds
+King of Diamonds
+Ace of Hearts
+2 of Hearts
+3 of Hearts
+4 of Hearts
+5 of Hearts
+6 of Hearts
+7 of Hearts
+8 of Hearts
+9 of Hearts
+10 of Hearts
+Jack of Hearts
+Queen of Hearts
+King of Hearts
+Ace of Spades
+2 of Spades
+3 of Spades
+4 of Spades
+5 of Spades
+6 of Spades
+7 of Spades
+8 of Spades
+9 of Spades
+10 of Spades
+Jack of Spades
+Queen of Spades
+King of Spades
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[</span><span class="o">-</span><span class="mi">100</span><span class="p">:])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10 of Clubs
+8 of Clubs
+King of Clubs
+Ace of Hearts
+6 of Diamonds
+6 of Clubs
+Ace of Clubs
+7 of Diamon
+...
+ts
+9 of Diamonds
+Queen of Diamonds
+Ace of Spades
+6 of Spades
+4 of Diamonds
+3 of Clubs
+10 of Diamonds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">deck</span><span class="o">.</span><span class="n">pop_card</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10 of Diamonds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">deck</span><span class="o">.</span><span class="n">pop_card</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3 of Clubs
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span><span class="o">.</span><span class="n">is_after</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">deck</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13911,9 +14022,58 @@ a.anchor-link {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
+<pre>50</pre>
 </div>
 
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[</span><span class="o">-</span><span class="mi">100</span><span class="p">:])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>10 of Clubs
+8 of Clubs
+King of Clubs
+Ace of Hearts
+6 of Diamonds
+6 of Clubs
+Ace of Clubs
+7 of Diamon
+...
+s
+King of Hearts
+7 of Hearts
+9 of Diamonds
+Queen of Diamonds
+Ace of Spades
+6 of Spades
+4 of Diamonds
+</pre>
+</div>
 </div>
 
 </div>
@@ -13923,49 +14083,12 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-init-method">The <code>init</code> method<a class="anchor-link" href="#The-init-method">&#182;</a></h1><p>It's been annoying that every time I redefine the <code>start</code> object, I have to assign the <code>hour</code>, <code>minute</code>, and <code>second</code> attributes.</p>
-<p>There is a special initialization method called <code>__init__</code> (also called double-under init) that gets invoked whenever a new object of the class is created.</p>
-<p>It is useful to use this method to assign values to attributes that would be used in the class. By convention, the parameters of init have the same names as the attributes.</p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>   
-    
-    <span class="k">def</span> <span class="nf">print_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">))</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-    
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Creating new <code>Time</code> class objects is much easier now.</p>
+<h2 id="Inheritance">Inheritance<a class="anchor-link" href="#Inheritance">&#182;</a></h2><p>Inheritance is the ability to define a new class that is a modified version of an existing class.</p>
+<p>For example, let's say we want a new class to represent a "hand", that is, the cards held by one player.</p>
+<p>A hand is similar to a deck: both are made up of a collection of cards, and both require operations like adding and removing cards.</p>
+<p>A hand is also different from a deck; there are operations we want for hands that don’t make sense for a deck. For example, in poker we might compare two hands to see which one wins. In bridge, we might compute a score for a hand in order to make a bid.</p>
+<p>This relationship between classes—similar, but different—lends itself to inheritance.</p>
+<p>To define a new class that inherits from an existing class, you put the name of the existing class in parentheses.</p>
 
 </div>
 </div>
@@ -13975,80 +14098,138 @@ a.anchor-link {
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">midnight</span> <span class="o">=</span> <span class="n">Time</span><span class="p">()</span>
-<span class="n">midnight</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents a hand of playing cards.&quot;&quot;&quot;</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>00:00:00
-</pre>
-</div>
-</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This definition indicates that Hand inherits from Deck; that means we can use methods like <code>pop_card</code> and <code>add_card</code> for Hands as well as Decks.</p>
+<p>When a new class inherits from an existing one, the existing one is called the <strong>parent</strong> and the new class is called the <strong>child</strong>.</p>
+<p>If we have nothing else defined, then <code>Hand</code> inherits <code>__init__</code> from <code>Deck</code>, which is not what we want.</p>
+<p>If we provide an <code>init</code> method in the <code>Hand</code> class, it overrides the one from <code>Deck</code>.</p>
 
 </div>
 </div>
-
-</div></div><div class="fragment">
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
-<span class="n">new_time</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Hand</span><span class="p">(</span><span class="n">Deck</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>09:00:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The argument 9 gets passed in as the value for <code>hour</code> because <code>self</code> is always the first argument, even in the <code>__init__</code> method.</p>
+<p>When you create a Hand, Python invokes this init method, not the one in Deck.</p>
 
 </div>
 </div>
-</div></div><div class="fragment">
+</div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
-<span class="n">new_time</span><span class="o">.</span><span class="n">print_time</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hand</span> <span class="o">=</span> <span class="n">Hand</span><span class="p">(</span><span class="s1">&#39;new hand&#39;</span><span class="p">)</span>
+<span class="n">hand</span><span class="o">.</span><span class="n">cards</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[26]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hand</span><span class="o">.</span><span class="n">label</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[27]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;new hand&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+<span class="n">card</span> <span class="o">=</span> <span class="n">deck</span><span class="o">.</span><span class="n">pop_card</span><span class="p">()</span>
+<span class="n">hand</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14065,7 +14246,7 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
+<pre>King of Spades
 </pre>
 </div>
 </div>
@@ -14077,40 +14258,53 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-__str__-method">The <code>__str__</code> method<a class="anchor-link" href="#The-__str__-method">&#182;</a></h2><p><code>__str__</code> is another special method that should return a string representation of an object.</p>
-<p>When you call <code>print()</code> on an object, Python invokes the <code>__str__</code> method.</p>
-<p>So far we have been using the method <code>print_time()</code> which we defined inside the class.</p>
-<p>Instead, we will modify this method to work with the <code>__str__</code> method. To view the time, we will call <code>print()</code> on the object.</p>
-<p>Note that in the conversion, we no longer call <code>print</code> but use <code>return</code> to return a string object.</p>
+<p>We can add these steps into a method called <code>move_cards</code> into the <code>Deck</code> class.</p>
+
+<pre><code>    def move_cards(self, hand, num):
+            for i in range(num):
+                hand.add_card(self.pop_card())</code></pre>
+<p><code>move_cards</code> takes two arguments, a Hand object and the number of cards to deal. It modifies both <code>self</code> and <code>hand</code>, and returns <code>None</code>.</p>
+<p>In some games, cards are moved from one hand to another, or from a hand back to the deck. You can use <code>move_cards</code> for any of these operations: <code>self</code> can be either a Deck or a Hand, and <code>hand</code>, despite the name, can also be a Deck.</p>
+<p>Inheritance is a useful feature. Some programs that would be repetitive without inheritance can be written more elegantly with it. Inheritance can facilitate code reuse, since you can customize the behavior of parent classes without having to modify them.</p>
+<p>In some cases, the inheritance structure reflects the natural structure of the problem, which makes the design easier to understand.</p>
+<p>On the other hand, inheritance can make programs difﬁcult to read. When a method is invoked, it is sometimes not clear where to find its definition. The relevant code may be spread across several modules.</p>
 
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>   
-    
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Deck</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">suit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">):</span>
+                <span class="n">card</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="n">suit</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">card</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">pop_card</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">card</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cards</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-    
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">move_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hand</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="n">hand</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_card</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14120,10 +14314,11 @@ a.anchor-link {
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+<span class="n">hand</span> <span class="o">=</span> <span class="n">Hand</span><span class="p">(</span><span class="s1">&#39;new hand&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14133,10 +14328,23 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">new_time</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span><span class="o">.</span><span class="n">move_cards</span><span class="p">(</span><span class="n">hand</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14153,7 +14361,133 @@ a.anchor-link {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>09:45:00
+<pre>King of Spades
+Queen of Spades
+Jack of Spades
+10 of Spades
+9 of Spades
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span> <span class="o">=</span> <span class="n">Deck</span><span class="p">()</span>
+<span class="n">hand</span> <span class="o">=</span> <span class="n">Hand</span><span class="p">(</span><span class="s1">&#39;new hand&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">deck</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[</span><span class="o">-</span><span class="mi">100</span><span class="p">:])</span>
+<span class="n">deck</span><span class="o">.</span><span class="n">move_cards</span><span class="p">(</span><span class="n">hand</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>nds
+Jack of Clubs
+5 of Diamonds
+7 of Diamonds
+5 of Clubs
+Queen of Spades
+7 of Hearts
+Queen of Hearts
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Queen of Hearts
+7 of Hearts
+Queen of Spades
+5 of Clubs
+7 of Diamonds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">deck</span><span class="p">)[</span><span class="o">-</span><span class="mi">30</span><span class="p">:])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ds
+Jack of Clubs
+5 of Diamonds
 </pre>
 </div>
 </div>
@@ -14165,74 +14499,23 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Operator-overloading">Operator overloading<a class="anchor-link" href="#Operator-overloading">&#182;</a></h2><p>There are even more special "double-under" methods that have special uses.</p>
-<p>One is the <code>__add__</code> method which will be invoked with the <code>+</code> operator.</p>
-<p>I'll add the following method inside the class definition</p>
-
-<pre><code>
-    def __add__(self, other):
-        seconds += self.time_to_int() + other.time_to_int()
-        return int_to_time(seconds)</code></pre>
+<h2 id="Class-relationships">Class relationships<a class="anchor-link" href="#Class-relationships">&#182;</a></h2><p>Class diagrams are useful to represent the relationships that exist between classes.</p>
+<p>There are different kids of relationships between classes:</p>
+<ul>
+<li>Objects in one class might contain references to objects in another class. For example, each Rectangle contains a reference to a Point, and each Deck contains references to many Cards. This kind of relationship is called <strong>HAS-A</strong>, as in "a Rechtangle has a point"</li>
+<li>One class might inherit from another. This relationship is called <strong>IS-A</strong>, as in "a Hand is a kind of a Deck"</li>
+<li>One class might depend on another in the sense that objects in one class take objects in the second class as parameters, or use objects in the second class as part of a computation. This kind of relationship is called a <strong>dependency</strong>.</li>
+</ul>
 
 </div>
 </div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>   
-    
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-    
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
-<span class="n">duration</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">vars</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14245,473 +14528,18 @@ a.anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>11:20:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Type-based-dispatch">Type-based dispatch<a class="anchor-link" href="#Type-based-dispatch">&#182;</a></h2><p>The previous defintion of <code>__add__</code> allowed us to add two <code>Time</code> class objects together. But we might also want the option to add integers as well.</p>
-<p>We can use type-based dispatch to call different methods depending on the type of input. To perform this, we use the <code>isinstance()</code> to see if the object belongs to a particular class or not.</p>
-<p>Inside the class definition of Time, I'll add the following:</p>
-
-<pre><code>    def __add__(self, other):
-        if isinstance(other, Time):
-            return self.add_time(other)
-        else:
-            return self.increment(other)
-
-    def add_time(self, other):
-        seconds = self.time_to_int() + other.time_to_int()
-        return int_to_time(seconds)
-
-    def increment(self, seconds):
-        seconds += self.time_to_int()
-        return int_to_time(seconds)</code></pre>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>   
-    
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Time</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_time</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-
-    <span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">duration</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>11:20:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1337</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10:07:17
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Commutative-Addition">Commutative Addition<a class="anchor-link" href="#Commutative-Addition">&#182;</a></h2><p>The add method as we've implemented it is not commutative.</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1337</span> <span class="o">+</span> <span class="n">start</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-44-f808e24131be&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>print<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-cyan-intense-fg ansi-bold">1337</span> <span class="ansi-yellow-intense-fg ansi-bold">+</span> start<span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: unsupported operand type(s) for +: &#39;int&#39; and &#39;Time&#39;</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The problem is, instead of asking the Time object to add an integer, Python is asking an integer to add a Time object and it doesn't know how.</p>
-<p>If we want this to work, we have to use another special method: <code>__radd__</code> which stands for "right-side add"</p>
-<p>We can pull this off quite easily:</p>
-
-<pre><code>    def __radd__(self, other):
-        return self.__add__(other)</code></pre>
-
-</div>
-</div>
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Time</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">minute</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">=</span> <span class="n">hour</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minute</span> <span class="o">=</span> <span class="n">minute</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">second</span> <span class="o">=</span> <span class="n">second</span>   
-    
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">:</span><span class="si">%.2d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hour</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Time</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_time</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">increment</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        
-    <span class="k">def</span> <span class="nf">time_to_int</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hour</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">minute</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">second</span>
-        <span class="k">return</span> <span class="n">seconds</span>
-
-    <span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">increment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
-        <span class="n">seconds</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">int_to_time</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
-    
-    <span class="k">def</span> <span class="nf">is_after</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">time_to_int</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">duration</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>11:20:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1337</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10:07:17
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">1337</span> <span class="o">+</span> <span class="n">start</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>10:07:17
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Polymorphism">Polymorphism<a class="anchor-link" href="#Polymorphism">&#182;</a></h2><p>Many functions will work on different types. These are known as <strong>polymorphic</strong> functions.</p>
-<p>For example, the function <code>sum</code> can work on any object that support addition.</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t1</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="n">t2</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
-<span class="n">t3</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>04:30:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Important-tips">Important tips<a class="anchor-link" href="#Important-tips">&#182;</a></h2><p>It is legal to add attributes to objects at any time. But if you have objects of the same type that don't have the same attributes, it can cause problems.</p>
-<p>It is recommended to initialize all of the objects attributes inside the <code>__init__</code> method.</p>
-<p>A useful function for debugging is teh <code>vars()</code> function which will print all of the attributes an object has as a dictionary.</p>
-
-</div>
-</div>
-</div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">vars</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[54]:</div>
+    <div class="prompt output_prompt">Out[38]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;hour&#39;: 9, &#39;minute&#39;: 45, &#39;second&#39;: 0}</pre>
+<pre>{&#39;cards&#39;: [&lt;__main__.Card at 0x21e31de84e0&gt;,
+  &lt;__main__.Card at 0x21e31de8278&gt;,
+  &lt;__main__.Card at 0x21e31de8c50&gt;,
+  &lt;__main__.Card at 0x21e31ef2588&gt;,
+  &lt;__main__.Card at 0x21e31ee2908&gt;],
+ &#39;label&#39;: &#39;new hand&#39;}</pre>
 </div>
 
 </div>
@@ -14719,6 +14547,14 @@ a.anchor-link {
 </div>
 </div>
 
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's a design suggestion: when you override a method, the interface of the new method should be the same as the old. It should take the same parameters, return the same type, and obey the same preconditions and postconditions. If you follow this rule, you will find that any function designed to work with an instance of a parent class, like a Deck, will also work with instances of child classes like a Hand and PokerHand.</p>
+
+</div>
+</div>
 </div></div></section></section>
 </div>
 </div>
